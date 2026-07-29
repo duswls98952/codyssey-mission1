@@ -14,6 +14,6 @@
 
 - [x] 터미널 기본 조작 및 폴더 구성
 - [x] 권한 변경 실습
-- [ ] Docker 설치/점검
-- [ ] hello-world 실행
-"Git 공부 중!"
+- [x] Docker 설치/점검
+- [x] hello-world 실행
+- [x] 'docker ps -a' 명령어로 컨테이너 상태 확인
