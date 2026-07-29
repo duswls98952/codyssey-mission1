@@ -14,6 +14,8 @@
 
 - [x] 터미널 기본 조작 및 폴더 구성
 - [x] 권한 변경 실습
+   - 파일('test.txt'): '-rw-r--r--' -> 'chmod 600' -> '-rw-------'
+   - 디렉토리('testdir'): 'dr-xr-xr-x(555) -> 'chmod700' -> 'drwx------'
 - [x] Docker 설치/점검
 - [x] hello-world 실행
 - [x] 'docker ps -a' 명령어로 컨테이너 상태 확인
@@ -25,4 +27,8 @@
    - Kernel Version: 6.17.8-orbstack
    - Architecture: x86_64
    - CPUs:6, Total Memory: 15.67GiB
-- [x] Docker 기본 운영 명령 수행
+- [x] 커스텀 Docker 이미지 빌드 및 실행
+   - Dockerfile 작성 (Nginx 베이스 이미지 활용)
+   - index.html 작성 및 한글 깨짐 방지(UTF-8) 설정
+   - 'docker build -t my-real-final .' 명령어로 이미지 생성
+   - 'docker run -p 9000:80' 명령어로 포트 포워딩 및 브라우저 접속 확인
