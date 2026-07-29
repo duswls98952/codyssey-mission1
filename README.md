@@ -16,3 +16,4 @@
 - [x] 권한 변경 실습
 - [ ] Docker 설치/점검
 - [ ] hello-world 실행
+"Git 공부 중!"
