@@ -32,5 +32,4 @@
    - index.html 작성 및 한글 깨짐 방지(UTF-8) 설정
    - 'docker build -t my-real-final .' 명령어로 이미지 생성
    - 'docker run -p 9000:80' 명령어로 포트 포워딩 및 브라우저 접속 확인
-      ![접속화면](./안녕하세요.png)
-      
+      ![접속화면](./mission1/안녕하세요.png)
