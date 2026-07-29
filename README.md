@@ -17,3 +17,4 @@
 - [x] Docker 설치/점검
 - [x] hello-world 실행
 - [x] 'docker ps -a' 명령어로 컨테이너 상태 확인
+- [x] Nginx 웹 서버 컨테이너 실행 및 브라우저 접속 성공
