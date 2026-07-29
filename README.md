@@ -18,3 +18,11 @@
 - [x] hello-world 실행
 - [x] 'docker ps -a' 명령어로 컨테이너 상태 확인
 - [x] Nginx 웹 서버 컨테이너 실행 및 브라우저 접속 성공
+- [x] Docker Desktop 설치 완료
+- [x] Docker 데몬 동작 확인 ('docker info')
+   - Server Version: 28.5.2
+   - Operation System: OrbStack (macOS 기반)
+   - Kernel Version: 6.17.8-orbstack
+   - Architecture: x86_64
+   - CPUs:6, Total Memory: 15.67GiB
+- [x] Docker 기본 운영 명령 수행
