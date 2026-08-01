@@ -25,6 +25,11 @@
 - `pwd` 
 - `ls -la` 
 - `cd`
+- `mkdir`
+- `touch`
+- `cp`
+- `mv`
+- `rm`
 
 #### 실행 결과
 
@@ -58,11 +63,91 @@ pwd
 /Users/duswls989525416/codyssey-mission1/mission1
 ```
 
+**3. 디렉터리 생성**
+
+```bash
+mkdir practice
+ls -la
+```
+
+```text
+drwxr-xr-x   2 duswls989525416  duswls989525416     64  8  1 16:58 practice
+```
+
+**4. 파일 생성**
+
+```bash
+cd practice
+touch hello.txt
+ls -la
+```
+
+```text
+-rw-r--r--   1 duswls989525416  duswls989525416    0  8  1 17:11 hello.txt
+```
+
+**5. 파일 복사**
+
+```bash
+cp hello.txt hello_copy.txt
+ls -la
+```
+
+``` text
+-rw-r--r--   1 duswls989525416  duswls989525416    0  8  1 17:31 hello_copy.txt
+-rw-r--r--   1 duswls989525416  duswls989525416    0  8  1 17:11 hello.txt
+```
+
+**6. 파일 이름 변경**
+
+```bash
+mv hello_copy.txt hello2.txt
+ls -la
+```
+
+```text
+-rw-r--r--   1 duswls989525416  duswls989525416    0  8  1 17:11 hello.txt
+-rw-r--r--   1 duswls989525416  duswls989525416    0  8  1 17:35 hello2.txt
+```
+
+**7. 파일 이동**
+
+```bash
+mv hello2.txt ..
+ls -la
+cd ..
+ls -la
+```
+
+```text
+practice 디렉터리
+-rw-r--r--   1 duswls989525416  duswls989525416    0  8  1 17:11 hello.txt
+mission1 디렉터리
+-rw-r--r--   1 duswls989525416  duswls989525416      0  8  1 17:35 hello2.txt
+```
+
+**8. 파일 삭제**
+
+```bash
+rm hello2.txt
+ls -la
+```
+
+삭제 후
+`ls -la` 목록에서 `hello2.txt`가 사라진 것을 확인하였다.
+
+
 #### 확인한 내용
 
 - `pwd` 명령으로 현재 작업 디렉터리의 절대 경로를 확인하였다.
 - `ls -la` 명령으로 숨김 파일을 포함한 파일 및 디렉터리의 상세 정보를 확인하였다.
 - `cd` 명령으로 `mission1` 디렉터리로 이동하였다.
+- `mkdir` 명령으로 `practice` 디렉터리를 생성하였다.
+- `touch` 명령으로 `hello.txt` 파일을 생성하였다.
+- `cp` 명령으로 `hello.txt` 파일을 `hello_copy.txt`로 복사하였다.
+- `mv` 명령으로 `hello_copy.txt` 파일의 이름을 `hello2.txt`로 변경하였다.
+- `mv` 명령으로 `hello2.txt` 파일을 상위 디렉터리(`..`)로 이동하였다.
+- `rm` 명령으로 `hello2.txt` 파일을 삭제하였다.
 
 
 ### 권한 변경
