@@ -9,14 +9,64 @@
 
 ## 2. 실행 환경
 
-- OS: macOS 15.7.4
-- Shell: zsh
-- Docker: 28.5.2
-- Git: 2.53.0
+- OS : macOS 15.7.4
+- Shell : zsh (/bin/zsh)
+- Docker : 28.5.2
+- Git : 2.53.0
 
 ## 3. 수행 체크리스트
 
+### 터미널 기본 조작
+
 - [x] 터미널 기본 조작 및 폴더 구성
+
+#### 사용한 명령어
+
+- `pwd` 
+- `ls -la` 
+- `cd`
+
+#### 실행 결과
+
+**현재 위치 확인**
+
+```bash
+pwd
+ls -la
+```
+
+```text
+/Users/duswls989525416/codyssey-mission1
+
+total 32
+drwxr-xr-x   6 duswls989525416  duswls989525416   192  7 30 15:52 .
+drwxr-x---+ 25 duswls989525416  duswls989525416   800  8  1 13:23 ..
+-rw-r--r--   1 duswls989525416  duswls989525416  6148  7 30 15:52 .DS_Store
+drwxr-xr-x  13 duswls989525416  duswls989525416   416  7 30 16:10 .git
+drwxr-xr-x   9 duswls989525416  duswls989525416   288  7 30 15:52 mission1
+-rw-r--r--   1 duswls989525416  duswls989525416  4571  8  1 14:02 README.md
+```
+
+**디렉터리 이동**
+
+```bash
+cd mission1
+```
+
+```text
+duswls989525416@c6r2s3 codyssey-mission1 % cd mission1
+duswls989525416@c6r2s3 mission1 % pwd
+/Users/duswls989525416/codyssey-mission1/mission1
+```
+
+#### 확인한 내용
+
+- `pwd` 명령으로 현재 작업 디렉터리의 절대 경로를 확인하였다.
+- `ls -la` 명령으로 숨김 파일을 포함한 파일 및 디렉터리의 상세 정보를 확인하였다.
+- `cd` 명령으로 `mission1` 디렉터리로 이동하였다.
+
+
+### 권한 변경
 - [x] 권한 변경 실습
    - 파일('test.txt'): '-rw-r--r--' -> 'chmod 600' -> '-rw-------'
    - 디렉토리('testdir'): 'dr-xr-xr-x(555) -> 'chmod700' -> 'drwx------'
