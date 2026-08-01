@@ -28,7 +28,7 @@
 
 #### 실행 결과
 
-**현재 위치 확인**
+**1. 현재 위치 및 목록 확인**
 
 ```bash
 pwd
@@ -47,15 +47,14 @@ drwxr-xr-x   9 duswls989525416  duswls989525416   288  7 30 15:52 mission1
 -rw-r--r--   1 duswls989525416  duswls989525416  4571  8  1 14:02 README.md
 ```
 
-**디렉터리 이동**
+**2. 디렉터리 이동**
 
 ```bash
 cd mission1
+pwd
 ```
 
 ```text
-duswls989525416@c6r2s3 codyssey-mission1 % cd mission1
-duswls989525416@c6r2s3 mission1 % pwd
 /Users/duswls989525416/codyssey-mission1/mission1
 ```
 
