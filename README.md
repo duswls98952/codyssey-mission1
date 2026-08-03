@@ -16,7 +16,7 @@
 
 ## 3. 수행 체크리스트
 
-### 터미널 기본 조작
+### 3-1. 터미널 기본 조작
 
 - [x] 터미널 기본 조작 및 폴더 구성
 
@@ -30,6 +30,9 @@
 - `cp`
 - `mv`
 - `rm`
+- `echo`
+- `cat`
+- `chmod`
 
 #### 실행 결과
 
@@ -136,6 +139,38 @@ ls -la
 삭제 후
 `ls -la` 목록에서 `hello2.txt`가 사라진 것을 확인하였다.
 
+**9. 파일 내용 입력 및 확인**
+
+```bash
+echo "Hello Codyssey" > hello.txt
+cat hello.txt
+```
+
+```text
+Hello Codyssey
+```
+
+**10. 파일 권한 변경**
+
+```bash
+chmod 600 test.txt
+ls -la
+```
+
+```text
+-rw-------   1 duswls989525416  duswls989525416     15 Aug  3 13:50 test.txt
+```
+
+**11. 디렉터리 권한 변경**
+
+```bash
+chmod 700 testdir
+ls -ld testdir
+```
+
+```text
+drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
+```
 
 #### 확인한 내용
 
@@ -148,6 +183,100 @@ ls -la
 - `mv` 명령으로 `hello_copy.txt` 파일의 이름을 `hello2.txt`로 변경하였다.
 - `mv` 명령으로 `hello2.txt` 파일을 상위 디렉터리(`..`)로 이동하였다.
 - `rm` 명령으로 `hello2.txt` 파일을 삭제하였다.
+- `echo` 명령으로 `hello.txt` 파일에 `Hello Codyssey` 내용을 저장하였다.
+- `cat` 명령으로 `hello.txt` 파일의 내용을 확인하였다.
+- `chmod 600` 명령으로 `test.txt` 파일의 권한을 `-rw----`로 병경하였다.
+- `chmod 700` 명령으로 `testdir` 디렉터리의 권한을 `drwx------`로 변경하였다.
+
+### 3-2. Docker 실습
+
+- [x] Docker 이미지 및 컨테이너 실습
+
+#### 사용한 명령어
+
+- docker build
+- docker run
+- docker ps
+- docker stop
+- docker rm
+- docker images
+- docker run -v
+
+#### 실행 결과
+
+**1. 이미지 생성**
+
+```bash
+docker build -t my-nginx .
+```
+
+```text
+[+] Building 8.1s (7/7) FINISHED
+...
+ => => naming to docker.io/library/my-nginx  
+ ```
+
+ **2. 컨테이너 실행**
+
+ ```bash
+ docker run -d -p 8080:80 --name my-nginx-container my-nginx
+ ```
+
+ ```text
+ c755f315cc45718213e87067b743e2aeee6e7446d23c7dc500dd2174880689a3
+ ```
+
+ **3. 실행 중인 컨테이너 확인 **
+
+ ```bash
+ docker ps
+ ```
+
+ ```text
+ CONTAINER ID   IMAGE      STATUS         PORTS                     NAMES
+c755f315cc45   my-nginx   Up 8 minutes   0.0.0.0:8080->80/tcp      my-nginx-container
+```
+
+**4. 컨테이너 중지**
+
+```bash
+docker stop my-nginx-container
+```
+
+```text
+my-nginx-container
+```
+
+**5. 컨테이너 삭제**
+
+```bash
+docker rm my-nginx-container
+docker ps -a
+```
+
+```text
+my-nginx-container
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+```
+
+**6. Docker 이미지 확인
+
+```bash
+docker images
+```
+
+```text
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+my-nginx     latest    79e5d98401fd   22 minutes ago   161MB
+```
+
+**7. 바인드 마운트 확인**
+
+```bash
+docker run -d -p8080:80 -v "$(pwd)/index/html:/usr/share/nginx/html/index.html" --name my-nginx-container my-nginx
+```
+브라우저에서 `http://loclhost:8080`에 접속한 후 `index.html`을 수정하고 저장하였다.
+파일 저장 후 브라우저를 새로고침하자 변경 내용이 즉시 반영되는 것을 확인하였다.
 
 
 ### 권한 변경
