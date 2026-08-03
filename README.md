@@ -185,7 +185,7 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 - `rm` 명령으로 `hello2.txt` 파일을 삭제하였다.
 - `echo` 명령으로 `hello.txt` 파일에 `Hello Codyssey` 내용을 저장하였다.
 - `cat` 명령으로 `hello.txt` 파일의 내용을 확인하였다.
-- `chmod 600` 명령으로 `test.txt` 파일의 권한을 `-rw-------`로 병경하였다.
+- `chmod 600` 명령으로 `test.txt` 파일의 권한을 `-rw-------`로 변경하였다.
 - `chmod 700` 명령으로 `testdir` 디렉터리의 권한을 `drwx------`로 변경하였다.
 
 ### 3-2. Docker 실습
@@ -194,6 +194,7 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 
 #### 사용한 명령어
 
+- `docker --version`
 - `docker info`
 - `docker build`
 - `docker run`
@@ -204,7 +205,7 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 - `docker ps -a`
 - `docker rm`
 - `docker images`
-- `docker run -v` 옵션
+- `docker run`의 `-v` 옵션
 - `docker volume create`
 - `docker volume ls`
 - `docker exec`
@@ -212,20 +213,23 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 
 #### 실행 결과
 
-**1. Docker 데몬 동작 확인**
+**1. Docker 설치 밑 데몬 동작 확인**
 
 ```bash
+docker --version
 docker info
 ```
 
 ```text
-Client:
- Version:    28.5.2
- Context:    orbstack
- Debug Mode: false
+ Docker version 28.5.2, build ecc6942
+ 
+ Client:
+  Version:    28.5.2
+  Context:    orbstack
+  Debug Mode: false
 
  Server:
- Containers: 1
+  Containers: 1
   Running: 1
   Paused: 0
   Stopped: 0
@@ -253,8 +257,6 @@ docker build -t my-nginx .
  c755f315cc45718213e87067b743e2aeee6e7446d23c7dc500dd2174880689a3
  ```
 
-
-
  **4. 실행 중인 컨테이너 확인**
 
  ```bash
@@ -265,8 +267,8 @@ docker build -t my-nginx .
  CONTAINER ID   IMAGE      STATUS         PORTS                     NAMES
 c755f315cc45   my-nginx   Up 8 minutes   0.0.0.0:8080->80/tcp      my-nginx-container
 ```
-브라우저에서 `http://localhost:8080`에 접속한 화면이다.
-![접속화면](./mission1/안녕하세요.png)
+`-p 8080:80` 옵션으로 호스트의 8080포트와 컨테이너의 80번 포트를 연결하였다. 브라우저에서 `http://localhost:8080`에 접속한 화면이다.
+![포트 매핑 접속 결과](./mission1/안녕하세요.png)
 
 **5. 컨테이너 로그 확인**
 
@@ -310,7 +312,7 @@ docker ps -a
 ```
 
 ```text
-ONTAINER ID   IMAGE      COMMAND                  CREATED       STATUS                      PORTS     NAMES
+CONTAINER ID   IMAGE      COMMAND                  CREATED       STATUS                      PORTS     NAMES
 cb1e52d478b5   my-nginx   "/docker-entrypoint.…"   2 hours ago   Exited (0) 39 seconds ago             my-nginx-container
 ```
 
@@ -345,9 +347,15 @@ docker run -d -p 8080:80 \
 --name my-nginx-container \
 my-nginx
 ```
+
+호스트 파일 변경 전
+
+![변경 전 화면](./mission1/안녕하세요.png)
 브라우저에서 `http://localhost:8080`에 접속한 후 `index.html`을 수정하고 저장하였다.
-이미지를 다시 빌드하고나 컨테이너를 다시 실행하지 않고 브라우저를 새로고침하자 변경된 내용이 즉시 반영되는 것을 확인하였다.
+
+호스트 파일 변경 후
 ![바인드 마운트 적용 결과](./mission1/볼륨연결.png)
+이미지를 다시 빌드하거나 컨테이너를 다시 실행하지 않고 브라우저를 새로고침하자 변경된 내용이 즉시 반영되는 것을 확인하였다.
 
 **12. 볼륨 영속성 검증**
 
@@ -373,7 +381,7 @@ docker run -d \
 nginx
 
 docker exec volume-nginx-1 \
-sh -c 'echo "Volume persistence test" > /usr/share/nginx/html/test.txt
+sh -c 'echo "Volume persistence test" > /usr/share/nginx/html/test.txt'
 
 docker exec volume-nginx-1 \
 cat /usr/share/nginx/html/test.txt
@@ -393,7 +401,7 @@ docker run -d \
 --name volume-nginx-2 \
 nginx
 
-docker exec volume-nginx2 \
+docker exec volume-nginx-2 \
 cat /usr/share/nginx/html/test.txt
 ```
 
@@ -403,9 +411,10 @@ Volume persistence test
 
 #### 확인한 내용
 
+- `docker --version` 명령으로 설치된 Docker 버전을 확인하였다.
 - `docker info` 명령으로 Docker 클라이언트와 Docker 데몬이 정상적으로 통신하는 것을 확인하였다.
 - `docker build` 명령으로 `Dockerfile`을 기반으로 `my-nginx` 이미지를 생성하였다.
-- `docker run` 명령으로 이미지를 실행하여 `my-nginx-conainer` 컨테이너를 생성하였다.
+- `docker run` 명령으로 이미지를 실행하여 `my-nginx-container` 컨테이너를 생성하였다.
 - `docker ps` 명령으로 실행 중인 컨테이너와 포트 연결 상태를 확인하였다.
 - `docker logs` 명령으로 Nginx가 정상적으로 시작되었고, 브라우저 요청에 HTTP 상태 코드 `200`으로 응답한 기록을 확인하였다.
 - `docker stats --no-stream` 명령으로 실행 중인 컨테이너의 CPU, 메모리, 네트워크 및 디스크 사용량을 한 번만 출력하여 확인하였다.
@@ -416,62 +425,52 @@ Volume persistence test
 - `-v` 옵션을 사용하여 호스트의 `index.html`과 컨테이너 내부의 `index.html`을 바인드 마운트하고, 파일 수정 내용이 즉시 반영되는 것을 확인하였다.
 - `docker volume create` 명령으로 `mission1-data` 볼륨을 생성하였다.
 - 첫 번째 컨테이너에서 볼륨이 연결된 경로에 `test.txt` 파일을 생성하였다.
-- 첫 번쨰 컨테이너를 삭제한 뒤 같은 볼륨을 연결한 두 번쨰 컨테이너에서 `test.txt`의 내용을 다시 확인하였다.
+- 첫 번째 컨테이너를 삭제한 뒤 같은 볼륨을 연결한 두 번째 컨테이너에서 `test.txt`의 내용을 다시 확인하였다.
 - 이를 통해 Docker 볼륨에 저장된 데이터는 컨테이너를 삭제해도 유지되는 영속성이 있음을 확인하였다.
 
 ## 4. 트러블슈팅
-- 사례1) Git 경로 오류
-        문제: mission1 폴더 안에서 git add README.md 실행 시 파일 인식 불가 에러 발생.
-        원인: 현재 작업 디렉토리가 상위 폴더가 아니어서 Git 파일을  찾지 못함.
-        해결: 'cd ..' 명령어로 상위 디렉토리 이동 후 다시 시도하여 해결.
-- 사례2) Docker 포트 매핑 또는 파일 인코딩 문제
-        문제: Nginx 컨테이너 접속 시 한글 꺠짐 발생.
-        원인: HTML 파일의 인코딩이 UTF-8로 설정되지 않음.
-        해결: <meta charset="UTF-8"> 태그 추가 후 이미지 재빌드 및 컨테이너 실행.
-## 5. Docker 운영/검증 로그
-      5.1 docker stats 컨테이너 자원 사용량 확인
+### 4-1. Git 파일 경로 오류
+
+**문제**
+
+`mission` 디렉터리 안에서 다음 명령을 실행하였다.
+
 ```bash
-CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O   PIDS
-f9849edab018   vol-test   0.00%     6.312MiB / 15.67GiB   0.04%     4.34kB / 2.77kB   18.2MB / 0B  7
+git add README.md
 ```
-      5.2 docker logs 컨테이너 접속 기록 확인
+
+```text
+zsh: command not found: add
+```
+
+**원인**
+
+`README.md`는 저장소 루트에 있지만 현재 위치는 하위 `mission1` 디렉터리였기 때문에 해당 경로에서 파일을 찾지 못했다.
+
+**해결**
 ```bash
-/docker-entrypoint.sh: Configuration complete; ready for start up
-2026/07/29 10:31:17 [notice] 1#1: start worker processes
-192.168.215.1 - - [29/Jul/2026:10:31:36 +0000] "GET / HTTP/1.1" 200 199 "-" "Mozilla/5.0..."
-192.168.215.1 - - [29/Jul/2026:10:33:55 +0000] "GET / HTTP/1.1" 200 180 "-" "Mozilla/5.0..."
-```  
-      5.3 설치 및 점검 결과
-   * **docker --version**
-  ```text
-  Docker version 28.5.2, build ecc6942
-  ```
-   * **docker info**
-  ```text
-  Operating System: OrbStack
-  Architecture: x86_64
-  CPUs: 6
-  Total Memory: 15.67GiB
-  Kernel Version: 6.17.8-orbstack-00308-g8f9c941121b1
-  ```
-      5.4 운영 명령 실행 흔적
-   * **docker images**
-   ```text
-   REPOSITORY      TAG       IMAGE ID       CREATED        SIZE
-   my-real-final   latest    f78d5cf33bb7   3 hours ago    161MB
-   my-final-web    latest    434656709038   4 hours ago    161MB
-   nginx           latest    4e5db4761e0f   13 days ago    161MB
-   hello-world     latest    e2ac70e7319a   4 months ago   10.1kB
-   ```
-   * **docker ps -a**
-   ```text
-   CONTAINER ID   IMAGE     STATUS           PORTS                                     NAMES
-   f9849edab018   nginx     Up About an hour 0.0.0.0:9001->80/tcp, [::]:9001->80/tcp   vol-test
-   ```
-   * **docker lofs**
-   ```text
-   192.168.215.1 - - [29/Jul/2026:10:33:55 +0000] "GET / HTTP/1.1" 200 180 "-" "Mozilla/5.0..."
-   ```
+cd ..
+git add README.md
+```
+
+저장소 루트로 이동한 뒤 다시 실행하여 해결하였다.
+
+### 4-2. HTML 한글 깨짐 문제
+**문제**
+Nginx 컨테이너 접속 시 한글이 정상적으로 표시되지 않았다.
+
+**원인**
+HTML 파일의 인코딩이 UTF-8로 설정되지 않았다.
+
+**해결**
+`index.html`의 `<head>`에 다음 태그를 추가하였다.
+
+```html
+<meta charset="UTF-8">
+```
+
+이미지 다시 빌드하고 컨테이너를 실행 한 뒤 한글이 정상적으로 표시되는 것을 확인하였다.
+![한글 표시 확인](/mission1/안녕하세요.png)
 
 ## 5. 과제 완료 소감
 - Git과 Docker의 기초적인 사용법을 익혔습니다.
