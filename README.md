@@ -213,7 +213,7 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 
 #### 실행 결과
 
-**1. Docker 설치 밑 데몬 동작 확인**
+**1. Docker 설치 및 데몬 동작 확인**
 
 ```bash
 docker --version
@@ -267,7 +267,7 @@ docker build -t my-nginx .
  CONTAINER ID   IMAGE      STATUS         PORTS                     NAMES
 c755f315cc45   my-nginx   Up 8 minutes   0.0.0.0:8080->80/tcp      my-nginx-container
 ```
-`-p 8080:80` 옵션으로 호스트의 8080포트와 컨테이너의 80번 포트를 연결하였다. 브라우저에서 `http://localhost:8080`에 접속한 화면이다.
+`-p 8080:80` 옵션으로 호스트의 8080번포트와 컨테이너의 80번 포트를 연결하였다. 브라우저에서 `http://localhost:8080`에 접속한 화면이다.
 ![포트 매핑 접속 결과](./mission1/안녕하세요.png)
 
 **5. 컨테이너 로그 확인**
@@ -350,11 +350,11 @@ my-nginx
 
 호스트 파일 변경 전
 
-![변경 전 화면](./mission1/안녕하세요.png)
+![변경 전 화면](./mission1/before-bind.png)
 브라우저에서 `http://localhost:8080`에 접속한 후 `index.html`을 수정하고 저장하였다.
 
 호스트 파일 변경 후
-![바인드 마운트 적용 결과](./mission1/볼륨연결.png)
+![바인드 마운트 적용 결과](./mission1/after-bind.png)
 이미지를 다시 빌드하거나 컨테이너를 다시 실행하지 않고 브라우저를 새로고침하자 변경된 내용이 즉시 반영되는 것을 확인하였다.
 
 **12. 볼륨 영속성 검증**
@@ -419,7 +419,7 @@ Volume persistence test
 - `docker logs` 명령으로 Nginx가 정상적으로 시작되었고, 브라우저 요청에 HTTP 상태 코드 `200`으로 응답한 기록을 확인하였다.
 - `docker stats --no-stream` 명령으로 실행 중인 컨테이너의 CPU, 메모리, 네트워크 및 디스크 사용량을 한 번만 출력하여 확인하였다.
 - `docker stop` 명령으로 컨테이너 실행을 중지하였다.
-- `docker ps -a` 명령으로 중지된 컨테이너가 `Exited(0)` 상태로 남아 있는 것을 확인하였다.
+- `docker ps -a` 명령으로 중지된 컨테이너가 `Exited (0)` 상태로 남아 있는 것을 확인하였다.
 - `docker rm` 명령으로 중지된 컨테이너를 삭제하였다.
 - `docker images` 명령으로 생성한 컨테이너를 삭제한 뒤에도 `my-nginx` 이미지가 유지되는 것을 확인하였다.
 - `-v` 옵션을 사용하여 호스트의 `index.html`과 컨테이너 내부의 `index.html`을 바인드 마운트하고, 파일 수정 내용이 즉시 반영되는 것을 확인하였다.
@@ -433,14 +433,14 @@ Volume persistence test
 
 **문제**
 
-`mission` 디렉터리 안에서 다음 명령을 실행하였다.
+`mission1` 디렉터리 안에서 다음 명령을 실행하였다.
 
 ```bash
 git add README.md
 ```
 
 ```text
-zsh: command not found: add
+fatal: pathspec 'README.md' did not match any files
 ```
 
 **원인**
@@ -469,8 +469,8 @@ HTML 파일의 인코딩이 UTF-8로 설정되지 않았다.
 <meta charset="UTF-8">
 ```
 
-이미지 다시 빌드하고 컨테이너를 실행 한 뒤 한글이 정상적으로 표시되는 것을 확인하였다.
-![한글 표시 확인](/mission1/안녕하세요.png)
+이미지 다시 빌드하고 컨테이너를 실행한 뒤 한글이 정상적으로 표시되는 것을 확인하였다.
+![한글 표시 확인](./mission1/안녕하세요.png)
 
 ## 5. 과제 완료 소감
 - Git과 Docker의 기초적인 사용법을 익혔습니다.
