@@ -194,10 +194,14 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 
 #### 사용한 명령어
 
+- `docker info`
 - `docker build`
 - `docker run`
 - `docker ps`
+- `docker logs`
+- `docker stats`
 - `docker stop`
+- `docker ps -a`
 - `docker rm`
 - `docker images`
 - `docker run -v` 옵션
@@ -205,6 +209,23 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 #### 실행 결과
 
 **1. Docker 데몬 동작 확인**
+
+```bash
+docker info
+```
+
+```text
+Client:
+ Version:    28.5.2
+ Context:    orbstack
+ Debug Mode: false
+
+ Server:
+ Containers: 1
+  Running: 1
+  Paused: 0
+  Stopped: 0
+ ```
 
 **2. 이미지 생성**
 
@@ -241,7 +262,28 @@ c755f315cc45   my-nginx   Up 8 minutes   0.0.0.0:8080->80/tcp      my-nginx-cont
 
 **5. 컨테이너 로그 확인**
 
+```bash
+docker logs my-nginx-container
+```
+
+```text
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2026/08/03 06:54:35 [notice] 1#1: nginx/1.31.3
+2026/08/03 06:54:35 [notice] 1#1: start worker processes
+192.168.215.1 - - [03/Aug/2026:06:54:41 +0000] "GET / HTTP/1.1" 200 180 
+192.168.215.1 - - [03/Aug/2026:06:56:05 +0000] "GET / HTTP/1.1" 200 198
+```
+
 **6. 컨테이너 리소스 확인**
+
+```bash
+docker stats --no-stream my-nginx-container
+```
+
+```text
+CONTAINER ID   NAME                 CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+cb1e52d478b5   my-nginx-container   0.00%     5.645MiB / 15.67GiB   0.04%     3.15kB / 1.82kB   16.7MB / 8.19kB   7
+```
 
 **7. 컨테이너 중지**
 
@@ -254,6 +296,15 @@ my-nginx-container
 ```
 
 **8. 컨테이너 정지 상태 확인**
+
+```bash
+docker ps -a
+```
+
+```text
+ONTAINER ID   IMAGE      COMMAND                  CREATED       STATUS                      PORTS     NAMES
+cb1e52d478b5   my-nginx   "/docker-entrypoint.…"   2 hours ago   Exited (0) 39 seconds ago             my-nginx-container
+```
 
 **9. 컨테이너 삭제**
 
@@ -294,10 +345,14 @@ my-nginx
 
 #### 확인한 내용
 
+- `docker info` 명령으로 Docker 클라이언트와 Docker 데몬이 정상적으로 통신하는 것을 확인하였다.
 - `docker build` 명령으로 `Dockerfile`을 기반으로 `my-nginx` 이미지를 생성하였다.
 - `docker run` 명령으로 이미지를 실행하여 `my-nginx-conainer` 컨테이너를 생성하였다.
 - `docker ps` 명령으로 실행 중인 컨테이너와 포트 연결 상태를 확인하였다.
+- `docker logs` 명령으로 Nginx가 정상적으로 시작되었고, 브라우저 요청에 HTTP 상태 코드 `200`으로 응답한 기록을 확인하였다.
+- `docker stats --no-stream` 명령으로 실행 중인 컨테이너의 CPU, 메모리, 네트워크 및 디스크 사용량을 한 번만 출력하여 확인하였다.
 - `docker stop` 명령으로 컨테이너 실행을 중지하였다.
+- `docker ps -a` 명령으로 중지된 컨테이너가 `Exited(0)` 상태로 남아 있는 것을 확인하였다.
 - `docker rm` 명령으로 중지된 컨테이너를 삭제하였다.
 - `docker images` 명령으로 컨테이너를 삭제한 뒤에도 이미지가 유지되는 것을 확인하였다.
 - `-v` 옵션을 사용하여 호스트의 `index.html`과 컨테이너 내부의 `index.html`을 바인드 마운트하고, 파일 수정 내용이 즉시 반영되는 것을 확인하였다.
