@@ -205,6 +205,10 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 - `docker rm`
 - `docker images`
 - `docker run -v` 옵션
+- `docker volume create`
+- `docker volume ls`
+- `docker exec`
+- `docker rm -f`
 
 #### 실행 결과
 
@@ -249,6 +253,8 @@ docker build -t my-nginx .
  c755f315cc45718213e87067b743e2aeee6e7446d23c7dc500dd2174880689a3
  ```
 
+
+
  **4. 실행 중인 컨테이너 확인**
 
  ```bash
@@ -259,6 +265,8 @@ docker build -t my-nginx .
  CONTAINER ID   IMAGE      STATUS         PORTS                     NAMES
 c755f315cc45   my-nginx   Up 8 minutes   0.0.0.0:8080->80/tcp      my-nginx-container
 ```
+브라우저에서 `http://localhost:8080`에 접속한 화면이다.
+![접속화면](./mission1/안녕하세요.png)
 
 **5. 컨테이너 로그 확인**
 
@@ -325,8 +333,8 @@ docker images
 ```
 
 ```text
-REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
-my-nginx     latest    79e5d98401fd   22 minutes ago   161MB
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+my-nginx     latest    79e5d98401fd   3 hours ago   161MB
 ```
 
 **11. 바인드 마운트 확인**
@@ -343,6 +351,56 @@ my-nginx
 
 **12. 볼륨 영속성 검증**
 
+
+```bash
+docker volume create mission1-data
+docker volume ls
+```
+
+```text
+mission1-data
+
+DRIVER    VOLUME NAME
+local     mission1-data
+```
+
+컨테이너 삭제 전
+
+```bash
+docker run -d \
+-v mission1-data:/usr/share/nginx/html \
+--name volume-nginx-1 \
+nginx
+
+docker exec volume-nginx-1 \
+sh -c 'echo "Volume persistence test" > /usr/share/nginx/html/test.txt
+
+docker exec volume-nginx-1 \
+cat /usr/share/nginx/html/test.txt
+```
+
+```text
+Volume persistence test
+```
+
+컨테이너 삭제 후
+
+```bash
+docker rm -f volume-nginx-1
+
+docker run -d \
+-v mission1-data:/usr/share/nginx/html \
+--name volume-nginx-2 \
+nginx
+
+docker exec volume-nginx2 \
+cat /usr/share/nginx/html/test.txt
+```
+
+```text
+Volume persistence test
+```
+
 #### 확인한 내용
 
 - `docker info` 명령으로 Docker 클라이언트와 Docker 데몬이 정상적으로 통신하는 것을 확인하였다.
@@ -354,42 +412,13 @@ my-nginx
 - `docker stop` 명령으로 컨테이너 실행을 중지하였다.
 - `docker ps -a` 명령으로 중지된 컨테이너가 `Exited(0)` 상태로 남아 있는 것을 확인하였다.
 - `docker rm` 명령으로 중지된 컨테이너를 삭제하였다.
-- `docker images` 명령으로 컨테이너를 삭제한 뒤에도 이미지가 유지되는 것을 확인하였다.
+- `docker images` 명령으로 생성한 컨테이너를 삭제한 뒤에도 `my-nginx` 이미지가 유지되는 것을 확인하였다.
 - `-v` 옵션을 사용하여 호스트의 `index.html`과 컨테이너 내부의 `index.html`을 바인드 마운트하고, 파일 수정 내용이 즉시 반영되는 것을 확인하였다.
+- `docker volume create` 명령으로 `mission1-data` 볼륨을 생성하였다.
+- 첫 번째 컨테이너에서 볼륨이 연결된 경로에 `test.txt` 파일을 생성하였다.
+- 첫 번쨰 컨테이너를 삭제한 뒤 같은 볼륨을 연결한 두 번쨰 컨테이너에서 `test.txt`의 내용을 다시 확인하였다.
+- 이를 통해 Docker 볼륨에 저장된 데이터는 컨테이너를 삭제해도 유지되는 영속성이 있음을 확인하였다.
 
-#### 추가 확인
-
-**1. Docker  데몬 동작 확인**
-
-
-
-### 권한 변경
-- [x] 권한 변경 실습
-   - 파일('test.txt'): '-rw-r--r--' -> 'chmod 600' -> '-rw-------'
-   - 디렉토리('testdir'): 'dr-xr-xr-x(555) -> 'chmod700' -> 'drwx------'
-- [x] Docker 설치/점검
-- [x] hello-world 실행
-- [x] 'docker ps -a' 명령어로 컨테이너 상태 확인
-- [x] Nginx 웹 서버 컨테이너 실행 및 브라우저 접속 성공
-- [x] Docker Desktop 설치 완료
-- [x] Docker 데몬 동작 확인 ('docker info')
-   - Server Version: 28.5.2
-   - Operation System: OrbStack (macOS 기반)
-   - Kernel Version: 6.17.8-orbstack
-   - Architecture: x86_64
-   - CPUs:6, Total Memory: 15.67GiB
-- [x] 커스텀 Docker 이미지 빌드 및 실행
-   - Dockerfile 작성 (Nginx 베이스 이미지 활용)
-   - index.html 작성 및 한글 깨짐 방지(UTF-8) 설정
-   - 'docker build -t my-real-final .' 명령어로 이미지 생성
-   - 'docker run -p 9000:80' 명령어로 포트 포워딩 및 브라우저 접속 확인
-      ![접속화면](./mission1/안녕하세요.png)
-- [x] Docker 볼륨 영속성 검증
-   - '-v "$PWD":/usr/share/nginx/html' 옵션을 사용하여 호스트와 컨테이너를 연결했습니다.
-   - 소스코드 (index.html) 수정 시 빌드 없이도 실시간으로 반영되는 것을 확인했습니다.
-      ![접속화면](./mission1/볼륨연결.png)
-   - 컨테이너를 삭제하고 다시 생성해도 데이터가 유지되는 영속성을 확인했습니다. 
-      ('docker stop $(docker ps -q))
 ## 4. 트러블슈팅
 - 사례1) Git 경로 오류
         문제: mission1 폴더 안에서 git add README.md 실행 시 파일 인식 불가 에러 발생.
