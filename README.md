@@ -204,7 +204,9 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 
 #### 실행 결과
 
-**1. 이미지 생성**
+**1. Docker 데몬 동작 확인**
+
+**2. 이미지 생성**
 
 ```bash
 docker build -t my-nginx .
@@ -216,7 +218,7 @@ docker build -t my-nginx .
  => => naming to docker.io/library/my-nginx  
  ```
 
- **2. 컨테이너 실행**
+ **3. 컨테이너 실행**
 
  ```bash
  docker run -d -p 8080:80 --name my-nginx-container my-nginx
@@ -226,7 +228,7 @@ docker build -t my-nginx .
  c755f315cc45718213e87067b743e2aeee6e7446d23c7dc500dd2174880689a3
  ```
 
- **3. 실행 중인 컨테이너 확인**
+ **4. 실행 중인 컨테이너 확인**
 
  ```bash
  docker ps
@@ -237,7 +239,11 @@ docker build -t my-nginx .
 c755f315cc45   my-nginx   Up 8 minutes   0.0.0.0:8080->80/tcp      my-nginx-container
 ```
 
-**4. 컨테이너 중지**
+**5. 컨테이너 로그 확인**
+
+**6. 컨테이너 리소스 확인**
+
+**7. 컨테이너 중지**
 
 ```bash
 docker stop my-nginx-container
@@ -247,7 +253,9 @@ docker stop my-nginx-container
 my-nginx-container
 ```
 
-**5. 컨테이너 삭제**
+**8. 컨테이너 정지 상태 확인**
+
+**9. 컨테이너 삭제**
 
 ```bash
 docker rm my-nginx-container
@@ -259,7 +267,7 @@ my-nginx-container
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
-**6. Docker 이미지 확인**
+**10. Docker 이미지 확인**
 
 ```bash
 docker images
@@ -270,7 +278,7 @@ REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
 my-nginx     latest    79e5d98401fd   22 minutes ago   161MB
 ```
 
-**7. 바인드 마운트 확인**
+**11. 바인드 마운트 확인**
 
 ```bash
 docker run -d -p 8080:80 \
@@ -279,8 +287,10 @@ docker run -d -p 8080:80 \
 my-nginx
 ```
 브라우저에서 `http://localhost:8080`에 접속한 후 `index.html`을 수정하고 저장하였다.
-이미지를 다시 빌드하고나 컨테이너를 다시 실행하지 않고 브라우저만 새로고침했으며, 변경된 내용이 즉시 반영되는 것을 확인하였다.
+이미지를 다시 빌드하고나 컨테이너를 다시 실행하지 않고 브라우저를 새로고침하자 변경된 내용이 즉시 반영되는 것을 확인하였다.
 ![바인드 마운트 적용 결과](./mission1/볼륨연결.png)
+
+**12. 볼륨 영속성 검증**
 
 #### 확인한 내용
 
@@ -290,7 +300,12 @@ my-nginx
 - `docker stop` 명령으로 컨테이너 실행을 중지하였다.
 - `docker rm` 명령으로 중지된 컨테이너를 삭제하였다.
 - `docker images` 명령으로 컨테이너를 삭제한 뒤에도 이미지가 유지되는 것을 확인하였다.
-- 바인드마운트를 이용해 호스트의 `index.html`과 컨테이너 내부의 `index.html`을 연결하고, 파일 수정 내용이 즉시 반영되는 것을 확인하였다.
+- `-v` 옵션을 사용하여 호스트의 `index.html`과 컨테이너 내부의 `index.html`을 바인드 마운트하고, 파일 수정 내용이 즉시 반영되는 것을 확인하였다.
+
+#### 추가 확인
+
+**1. Docker  데몬 동작 확인**
+
 
 
 ### 권한 변경
