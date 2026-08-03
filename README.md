@@ -185,7 +185,7 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 - `rm` 명령으로 `hello2.txt` 파일을 삭제하였다.
 - `echo` 명령으로 `hello.txt` 파일에 `Hello Codyssey` 내용을 저장하였다.
 - `cat` 명령으로 `hello.txt` 파일의 내용을 확인하였다.
-- `chmod 600` 명령으로 `test.txt` 파일의 권한을 `-rw----`로 병경하였다.
+- `chmod 600` 명령으로 `test.txt` 파일의 권한을 `-rw-------`로 병경하였다.
 - `chmod 700` 명령으로 `testdir` 디렉터리의 권한을 `drwx------`로 변경하였다.
 
 ### 3-2. Docker 실습
@@ -194,13 +194,13 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 
 #### 사용한 명령어
 
-- docker build
-- docker run
-- docker ps
-- docker stop
-- docker rm
-- docker images
-- docker run -v
+- `docker build`
+- `docker run`
+- `docker ps`
+- `docker stop`
+- `docker rm`
+- `docker images`
+- `docker run -v` 옵션
 
 #### 실행 결과
 
@@ -226,7 +226,7 @@ docker build -t my-nginx .
  c755f315cc45718213e87067b743e2aeee6e7446d23c7dc500dd2174880689a3
  ```
 
- **3. 실행 중인 컨테이너 확인 **
+ **3. 실행 중인 컨테이너 확인**
 
  ```bash
  docker ps
@@ -259,7 +259,7 @@ my-nginx-container
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
-**6. Docker 이미지 확인
+**6. Docker 이미지 확인**
 
 ```bash
 docker images
@@ -273,10 +273,24 @@ my-nginx     latest    79e5d98401fd   22 minutes ago   161MB
 **7. 바인드 마운트 확인**
 
 ```bash
-docker run -d -p8080:80 -v "$(pwd)/index/html:/usr/share/nginx/html/index.html" --name my-nginx-container my-nginx
+docker run -d -p 8080:80 \
+-v "$(pwd)/index.html:/usr/share/nginx/html/index.html" \
+--name my-nginx-container \
+my-nginx
 ```
-브라우저에서 `http://loclhost:8080`에 접속한 후 `index.html`을 수정하고 저장하였다.
-파일 저장 후 브라우저를 새로고침하자 변경 내용이 즉시 반영되는 것을 확인하였다.
+브라우저에서 `http://localhost:8080`에 접속한 후 `index.html`을 수정하고 저장하였다.
+이미지를 다시 빌드하고나 컨테이너를 다시 실행하지 않고 브라우저만 새로고침했으며, 변경된 내용이 즉시 반영되는 것을 확인하였다.
+![바인드 마운트 적용 결과](./mission1/볼륨연결.png)
+
+#### 확인한 내용
+
+- `docker build` 명령으로 `Dockerfile`을 기반으로 `my-nginx` 이미지를 생성하였다.
+- `docker run` 명령으로 이미지를 실행하여 `my-nginx-conainer` 컨테이너를 생성하였다.
+- `docker ps` 명령으로 실행 중인 컨테이너와 포트 연결 상태를 확인하였다.
+- `docker stop` 명령으로 컨테이너 실행을 중지하였다.
+- `docker rm` 명령으로 중지된 컨테이너를 삭제하였다.
+- `docker images` 명령으로 컨테이너를 삭제한 뒤에도 이미지가 유지되는 것을 확인하였다.
+- 바인드마운트를 이용해 호스트의 `index.html`과 컨테이너 내부의 `index.html`을 연결하고, 파일 수정 내용이 즉시 반영되는 것을 확인하였다.
 
 
 ### 권한 변경
