@@ -196,6 +196,20 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 
 - `docker --version`
 - `docker info`
+- `docker run hello-world`
+- `docker run -it --name ubuntu-test ubuntu`
+- `ls`
+- `echo "Hello Ubuntu"`
+- `exit`
+- `docker start ubuntu-test`
+- `docker attach ubuntu-test`
+- `pwd`
+- `exit`
+- `docker start ubuntu-test`
+- `docker exec -it ubuntu-test bash`
+- `pwd`
+- `exit`
+- `docker ps`
 - `docker build`
 - `docker run`
 - `docker ps`
@@ -210,6 +224,7 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 - `docker volume ls`
 - `docker exec`
 - `docker rm -f`
+- 
 
 #### 실행 결과
 
@@ -235,7 +250,34 @@ docker info
   Stopped: 0
  ```
 
-**2. 이미지 생성**
+**2. hello world 컨테이너 실행**
+
+```bash
+docker run hello-world
+```
+
+![hello-world컨테이너실행](./mission1/hello-world컨테이너실행.png)
+
+**3. Ubuntu 컨테이너 실행 및 내부 명령어 수행**
+
+```bash
+docker run -it --name ubuntu-test ubuntu
+ls
+echo "Hello Ubuntu"
+exit
+```
+
+![Ubuntu 컨테이너 실행](./mission1/Ubuntu%20컨테이넌%20실행.png)
+
+**4. attach와 exec 동작 비교**
+
+attach
+![docker attach](./mission1/docker-attach.png)
+
+exec
+![docker exec](./mission1/docker-exec.png)
+
+**5. 이미지 생성**
 
 ```bash
 docker build -t my-nginx .
@@ -247,7 +289,7 @@ docker build -t my-nginx .
  => => naming to docker.io/library/my-nginx  
  ```
 
- **3. 컨테이너 실행**
+ **6. 컨테이너 실행**
 
  ```bash
  docker run -d -p 8080:80 --name my-nginx-container my-nginx
@@ -257,7 +299,7 @@ docker build -t my-nginx .
  c755f315cc45718213e87067b743e2aeee6e7446d23c7dc500dd2174880689a3
  ```
 
- **4. 실행 중인 컨테이너 확인**
+ **7. 실행 중인 컨테이너 확인**
 
  ```bash
  docker ps
@@ -270,7 +312,7 @@ c755f315cc45   my-nginx   Up 8 minutes   0.0.0.0:8080->80/tcp      my-nginx-cont
 `-p 8080:80` 옵션으로 호스트의 8080번 포트와 컨테이너의 80번 포트를 연결하였다. 브라우저에서 `http://localhost:8080`에 접속한 화면이다.
 ![포트 매핑 접속 결과](./mission1/안녕하세요.png)
 
-**5. 컨테이너 로그 확인**
+**8. 컨테이너 로그 확인**
 
 ```bash
 docker logs my-nginx-container
@@ -284,7 +326,7 @@ docker logs my-nginx-container
 192.168.215.1 - - [03/Aug/2026:06:56:05 +0000] "GET / HTTP/1.1" 200 198
 ```
 
-**6. 컨테이너 리소스 확인**
+**9. 컨테이너 리소스 확인**
 
 ```bash
 docker stats --no-stream my-nginx-container
@@ -295,7 +337,7 @@ CONTAINER ID   NAME                 CPU %     MEM USAGE / LIMIT     MEM %     NE
 cb1e52d478b5   my-nginx-container   0.00%     5.645MiB / 15.67GiB   0.04%     3.15kB / 1.82kB   16.7MB / 8.19kB   7
 ```
 
-**7. 컨테이너 중지**
+**10. 컨테이너 중지**
 
 ```bash
 docker stop my-nginx-container
@@ -305,7 +347,7 @@ docker stop my-nginx-container
 my-nginx-container
 ```
 
-**8. 컨테이너 정지 상태 확인**
+**11. 컨테이너 정지 상태 확인**
 
 ```bash
 docker ps -a
@@ -316,7 +358,7 @@ CONTAINER ID   IMAGE      COMMAND                  CREATED       STATUS         
 cb1e52d478b5   my-nginx   "/docker-entrypoint.…"   2 hours ago   Exited (0) 39 seconds ago             my-nginx-container
 ```
 
-**9. 컨테이너 삭제**
+**12. 컨테이너 삭제**
 
 ```bash
 docker rm my-nginx-container
@@ -328,7 +370,7 @@ my-nginx-container
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
-**10. Docker 이미지 확인**
+**13. Docker 이미지 확인**
 
 ```bash
 docker images
@@ -339,7 +381,7 @@ REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
 my-nginx     latest    79e5d98401fd   3 hours ago   161MB
 ```
 
-**11. 바인드 마운트 확인**
+**14. 바인드 마운트 확인**
 
 ```bash
 docker run -d -p 8080:80 \
@@ -357,7 +399,7 @@ my-nginx
 ![바인드 마운트 적용 결과](./mission1/after-bind.png)
 이미지를 다시 빌드하거나 컨테이너를 다시 실행하지 않고 브라우저를 새로고침하자 변경된 내용이 즉시 반영되는 것을 확인하였다.
 
-**12. 볼륨 영속성 검증**
+**15. 볼륨 영속성 검증**
 
 
 ```bash
@@ -413,6 +455,17 @@ Volume persistence test
 
 - `docker --version` 명령으로 설치된 Docker 버전을 확인하였다.
 - `docker info` 명령으로 Docker 클라이언트와 Docker 데몬이 정상적으로 통신하는 것을 확인하였다.
+- 로컬에 이미지가 없으면 Docker Hub에서 자동으로 이미지를 다운로듷나ㅡㄴ 것을 확인하였다.
+- 다운로드한 이미지를 이용하여 컨테이너를 생성하고 실행하는 것을 확인하였다.
+- `hello-world` 이미지를 이용해 테스트용 컨테이너가 실행되고 "Hello from Docker!" 메시지가 출력되는 것을 확인하였다.
+- 이를 통해 Docker 설치와 Docker 데몬이 정상적으로 동작하는 것을 확인하였다.
+- 로컬에 Ubuntu 이미지가 없어 Docker Hub에서 자동으로 이미지를 다운로드하는 것을 확인하였다.
+- Ubuntu 컨테이너 내부에 접속하여 `ls`와 `echo` 명령어를 실행할 수 있음을 확인하였다.
+- `exit` 명령으로 컨테이너 내부 셸을 종료하고 호스트 터미널로 돌아오는 것을 확인하였다.
+- `docker attach`는 실행 중인 컨테이너의 메인 프로세스에 연결되는 것을 확인하였다.
+- Ubuntu 컨테이너에서는 메인 프로세스가 Bash이므로 `exit` 명령을 입력하면 컨테이너도 함께 종료되는 것을 확인하였다.
+- `docker exec`는 실행 중인 컨테이너에서 새로운 Bash 프로세스를 실행하는 것을 확인하였다.
+- `docker exec`에서 `exit` 명령을 입력해도 메인 프로세스는 계속 실행되므로 컨테이너가 종료되지 않는 것을 `docker ps` 명령으로 확인하였다.
 - `docker build` 명령으로 `Dockerfile`을 기반으로 `my-nginx` 이미지를 생성하였다.
 - `docker run` 명령으로 이미지를 실행하여 `my-nginx-container` 컨테이너를 생성하였다.
 - `docker ps` 명령으로 실행 중인 컨테이너와 포트 연결 상태를 확인하였다.
@@ -427,6 +480,49 @@ Volume persistence test
 - 첫 번째 컨테이너에서 볼륨이 연결된 경로에 `test.txt` 파일을 생성하였다.
 - 첫 번째 컨테이너를 삭제한 뒤 같은 볼륨을 연결한 두 번째 컨테이너에서 `test.txt`의 내용을 다시 확인하였다.
 - 이를 통해 Docker 볼륨에 저장된 데이터는 컨테이너를 삭제해도 유지되는 영속성이 있음을 확인하였다.
+
+### 3-3. Git 설정 및 GitHub연동
+
+- [x] Git 사용자 정보와 기본 브랜치를 설정하고 GitHub 저장소 연동을 확인함
+
+#### 사용한 명령어
+
+- `git config --global user.name "duswls98952"`
+- `git config --global user.email "duswls98952@naver.com"`
+- `git config --global init.defaultBranch main`
+- `git config --list`
+- `git remote -v`
+
+#### 실행 결과
+
+```bash
+git config --list
+```
+
+```text
+credential.helper=osxkeychain
+user.name=duswls98952
+user.email=duswls98952@naver.com
+init.defaultbranch=main
+remote.origin.url=http://github.com/duswls98952/codyssey-mission1.git
+branch.main.remote=origin
+branch.main.merge=refs/heads/main
+```
+```bash
+git remote -v
+```
+
+```text
+origin  http://github.com/duswls98952/codyssey-mission1.git (fetch)
+origin  http://github.com/duswls98952/codyssey-mission1.git (push)
+```
+
+#### 확인한 내용
+
+- Git 사용자 이름과 이메일이 정상적으로 설정된 것을 확인하였다.
+- 기본 브랜치가 `main`으로 설정된 것을 확인하였다.
+- 로컬 저장소의 `origin`이 GitHub 원ㄴ격 저장소와 연결된 것을 확인하였다.
+- `fetch`와 `push`에 동일한 우너격 저장소 주소가 사용되는 것을 확인하였다.
 
 ## 4. 트러블슈팅
 ### 4-1. Git 파일 경로 오류
