@@ -224,7 +224,6 @@ drwx------  3 duswls989525416  duswls989525416  96 Aug  3 13:50 testdir
 - `docker volume ls`
 - `docker exec`
 - `docker rm -f`
-- 
 
 #### 실행 결과
 
@@ -272,9 +271,19 @@ exit
 **4. attach와 exec 동작 비교**
 
 attach
+
+```bash
+docker attach ubuntu-test
+```
+
 ![docker attach](./mission1/docker-attach.png)
 
 exec
+
+```bash
+docker exec -it ubuntu-test bash
+```
+
 ![docker exec](./mission1/docker-exec.png)
 
 **5. 이미지 생성**
@@ -455,7 +464,7 @@ Volume persistence test
 
 - `docker --version` 명령으로 설치된 Docker 버전을 확인하였다.
 - `docker info` 명령으로 Docker 클라이언트와 Docker 데몬이 정상적으로 통신하는 것을 확인하였다.
-- 로컬에 이미지가 없으면 Docker Hub에서 자동으로 이미지를 다운로듷나ㅡㄴ 것을 확인하였다.
+- 로컬에 이미지가 없으면 Docker Hub에서 자동으로 이미지를 다운로드하는 것을 확인하였다.
 - 다운로드한 이미지를 이용하여 컨테이너를 생성하고 실행하는 것을 확인하였다.
 - `hello-world` 이미지를 이용해 테스트용 컨테이너가 실행되고 "Hello from Docker!" 메시지가 출력되는 것을 확인하였다.
 - 이를 통해 Docker 설치와 Docker 데몬이 정상적으로 동작하는 것을 확인하였다.
@@ -487,13 +496,15 @@ Volume persistence test
 
 #### 사용한 명령어
 
-- `git config --global user.name "duswls98952"`
-- `git config --global user.email "duswls98952@naver.com"`
+- `git config --global user.name "duswls***"`
+- `git config --global user.email "duswls***@naver.com"`
 - `git config --global init.defaultBranch main`
 - `git config --list`
 - `git remote -v`
 
 #### 실행 결과
+
+**1. Git 설정**
 
 ```bash
 git config --list
@@ -508,6 +519,9 @@ remote.origin.url=http://github.com/duswls98952/codyssey-mission1.git
 branch.main.remote=origin
 branch.main.merge=refs/heads/main
 ```
+
+**2. GitHub연동**
+
 ```bash
 git remote -v
 ```
@@ -517,14 +531,17 @@ origin  http://github.com/duswls98952/codyssey-mission1.git (fetch)
 origin  http://github.com/duswls98952/codyssey-mission1.git (push)
 ```
 
+![저장소 연동 증거](./mission1/저장소%20연동%20증거.png)
+
 #### 확인한 내용
 
 - Git 사용자 이름과 이메일이 정상적으로 설정된 것을 확인하였다.
 - 기본 브랜치가 `main`으로 설정된 것을 확인하였다.
-- 로컬 저장소의 `origin`이 GitHub 원ㄴ격 저장소와 연결된 것을 확인하였다.
-- `fetch`와 `push`에 동일한 우너격 저장소 주소가 사용되는 것을 확인하였다.
+- 로컬 저장소의 `origin`이 GitHub 원격 저장소와 연결된 것을 확인하였다.
+- `fetch`와 `push`에 동일한 원격 저장소 주소가 사용되는 것을 확인하였다.
 
 ## 4. 트러블슈팅
+
 ### 4-1. Git 파일 경로 오류
 
 **문제**
