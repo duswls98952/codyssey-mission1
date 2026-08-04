@@ -490,7 +490,7 @@ Volume persistence test
 - 첫 번째 컨테이너를 삭제한 뒤 같은 볼륨을 연결한 두 번째 컨테이너에서 `test.txt`의 내용을 다시 확인하였다.
 - 이를 통해 Docker 볼륨에 저장된 데이터는 컨테이너를 삭제해도 유지되는 영속성이 있음을 확인하였다.
 
-### 3-3. Git 설정 및 GitHub연동
+### 3-3. Git 설정 및 GitHub 연동
 
 - [x] Git 사용자 정보와 기본 브랜치를 설정하고 GitHub 저장소 연동을 확인함
 
@@ -512,15 +512,15 @@ git config --list
 
 ```text
 credential.helper=osxkeychain
-user.name=duswls98952
-user.email=duswls98952@naver.com
+user.name=duswls***
+user.email=duswls***@naver.com
 init.defaultbranch=main
 remote.origin.url=http://github.com/duswls98952/codyssey-mission1.git
 branch.main.remote=origin
 branch.main.merge=refs/heads/main
 ```
 
-**2. GitHub연동**
+**2. GitHub 연동**
 
 ```bash
 git remote -v
@@ -584,7 +584,7 @@ HTML 문서에서 문자 인코딩 방식이 명확하게 지정되지 않아 �
 <meta charset="UTF-8">
 ```
 
-UTF-8문자 인코딩을 명시한 뒤 한글이 정상적으로 표시되는 것을 확인하였다.
+UTF-8 문자 인코딩을 명시한 뒤 한글이 정상적으로 표시되는 것을 확인하였다.
 
 ![한글 표시 확인](./mission1/한글깨짐수정.png)
 
